@@ -9,9 +9,14 @@ doctorRoutes.get('/',async(req,res)=>{
 })
 doctorRoutes.get('/:id',async(req,res)=>{
     const id=req.params.id
-    const doctor=await DoctorModel.findOne({_id:id})
-    res.send(doctor)
-    
+    const doctor=DoctorModel.findOne({_id:id})
+    doctor.then((data)=>{
+        return data
+    }).then((data)=>{
+        res.send(data)
+    }).catch((error)=>{
+        res.send({'error':error.message})
+    })
 })
 
 doctorRoutes.post('/',async(req,res)=>{
